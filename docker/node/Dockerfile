@@ -2,13 +2,10 @@ FROM node:lts-alpine
 
 WORKDIR /app
 
-
-RUN npm install
+RUN npm install -g @vue/cli @vue/cli-service-global
 
 COPY . .
 
 EXPOSE 8080
-
-#RUN npm serve
 
 CMD [ "npm", "run", "serve" ]
