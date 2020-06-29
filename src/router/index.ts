@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Layout from "@/views/Layout.vue";
 
@@ -16,10 +15,20 @@ const routes: Array<RouteConfig> = [
     path: "/",
     component: Layout,
     children: [
-      {path: "", name: "home", component: () => import(/* webpackChunkName: "home" */ "../views/Home.vue")},
-      {path: "/config", name: "about", component: () => import(/* webpackChunkName: "about" */ "../views/About.vue")},
+      {
+        path: "",
+        name: "home",
+        component: () =>
+          import(/* webpackChunkName: "home" */ "../views/Home.vue")
+      },
+      {
+        path: "/config",
+        name: "about",
+        component: () =>
+          import(/* webpackChunkName: "about" */ "../views/About.vue")
+      }
     ]
-  },
+  }
 ];
 
 const router = new VueRouter({
