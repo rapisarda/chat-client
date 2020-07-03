@@ -13,3 +13,6 @@ build:
 
 up:
 	$(FIG) up -d --remove-orphans
+
+logf:
+	$(FIG) logs -f

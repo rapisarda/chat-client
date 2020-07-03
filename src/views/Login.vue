@@ -12,18 +12,18 @@
               <v-card-text>
                 <v-form>
                   <v-text-field
-                          label="Login"
-                          v-model="email"
-                          prepend-icon="mdi-account"
-                          type="text"
+                    label="Login"
+                    v-model="email"
+                    prepend-icon="mdi-account"
+                    type="text"
                   />
 
                   <v-text-field
-                          id="password"
-                          label="Password"
-                          v-model="password"
-                          prepend-icon="mdi-lock"
-                          type="password"
+                    id="password"
+                    label="Password"
+                    v-model="password"
+                    prepend-icon="mdi-lock"
+                    type="password"
                   />
                 </v-form>
               </v-card-text>
@@ -40,27 +40,30 @@
 </template>
 
 <script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator';
-  import Fetcher from "@/utils/fetch"
+import { Component, Vue } from "vue-property-decorator";
+import Fetcher from "@/utils/fetch";
 
-  @Component
-  export default class extends Vue {
+@Component
+export default class extends Vue {
+  email = "";
+  password = "";
 
-    email = '';
-    password = '';
-
-    submit() {
-      Fetcher.fetch('http://api.chat.local/authentication_token', 'POST', {
-        email : this.email, password: this.password
-      }).then(success => {
-        if (200 === success.status) {
-          success.json().then(data => {
-            localStorage.setItem('jwt', data.token);
-            this.$router.push({name: 'home'})
-          });
-        }
-      })
-    }
-
+  mounted() {
+    localStorage.removeItem("jwt");
   }
+
+  submit() {
+    Fetcher.fetch("http://api.chat.local/authentication_token", "POST", {
+      email: this.email,
+      password: this.password,
+    },).then(success => {
+      if (200 === success.status) {
+        success.json().then(data => {
+          localStorage.setItem("jwt", data.token,);
+          this.$router.push({ name: "home" });
+        },);
+      }
+    });
+  }
+}
 </script>

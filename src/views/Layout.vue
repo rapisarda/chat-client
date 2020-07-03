@@ -10,8 +10,14 @@
       app
       overflow
     >
-      <a href="https://googe.com">hello</a>
-      <a href="https://googe.com">hello2</a>
+
+      <v-list dense nav class="py-0">
+        <v-list-item v-for="(user, k) in users" :key="k" link>
+          <v-list-item-content>
+            <v-list-item-title>{{ user.email }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
 
     <v-app-bar :clipped-left="primaryDrawer.clipped" app>
@@ -34,20 +40,26 @@
   </v-app>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    drawers: ["Default (no property)", "Permanent", "Temporary"],
-    primaryDrawer: {
-      model: null,
-      type: "default (no property)",
-      clipped: false,
-      floating: false,
-      mini: false
-    },
-    footer: {
-      inset: false
-    }
-  })
-};
+<script lang="ts">
+import { Component, Vue, } from "vue-property-decorator";
+import User from "@/model/user";
+
+@Component
+export default class extends Vue {
+  drawers = ["Default (no property)", "Permanent", "Temporary"];
+  primaryDrawer = {
+    model: null,
+    type: "default (no property)",
+    clipped: false,
+    floating: false,
+    mini: false
+  };
+  footer = {
+    inset: false
+  };
+  users: Array<User> = [];
+  mounted() {
+    User.findAll().then(() => (this.users = User.all()),);
+  }
+}
 </script>
